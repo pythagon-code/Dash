@@ -6,5 +6,5 @@ class DashLayoutCreator:
     def create_default_layout() -> DashLayout:
         return DashLayout(objects=[
             DashObject(DashObjectType.UPSIDE_DOWN_SPIKE, (12, 0)),
-            DashObject(DashObjectType.YELLOW_ORB, (13, 1)),
+            DashObject(DashObjectType.BLOCK, (13, 1)),
         ])

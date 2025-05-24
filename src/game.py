@@ -62,4 +62,4 @@ class DashGame:
         while True:
             self.loop()
             pygame.display.flip()
-            self.clock.tick(60)
+            self.clock.tick(120)

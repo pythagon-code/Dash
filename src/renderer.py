@@ -25,7 +25,7 @@ class DashRenderer:
     def find_anchor_position(self, position: tuple[int, int], moves_horizontally: bool) -> tuple[int, int]:
         line = self.game.physics.line if moves_horizontally else 0
 
-        x = (position[0] * (self.game.BLOCK_SIZE[0] - line) - self.game.BLOCK_SIZE[0]) // 2
+        x = (position[0] - line) * self.game.BLOCK_SIZE[0]
         y = self.game.SCREEN_DIMS[1] - position[1] * self.game.BLOCK_SIZE[1] - 189
         return x, y
 

@@ -9,11 +9,11 @@ class DashVelocity:
 
 
     def clamp_speed(self) -> None:
-        self.velocity = min(-DashVelocity.MAX_SPEED, max(DashVelocity.MAX_SPEED, self.velocity))
+        self.velocity = max(-DashVelocity.MAX_SPEED, min(DashVelocity.MAX_SPEED, self.velocity))
 
 
     def fall(self) -> None:
-        self.velocity += -self.GRAVITY if self.reversed_gravity else self.GRAVITY
+        self.velocity += self.GRAVITY if self.reversed_gravity else -self.GRAVITY
         self.clamp_speed()
 
 
