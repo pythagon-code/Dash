@@ -10,13 +10,15 @@ class DashObjectType(Enum):
     YELLOW_ORB = 4
     PINK_ORB = 5
     BLUE_ORB = 6
-    RED_ORB = 7
+    GREEN_ORB = 7
+    RED_ORB = 8
+    BLACK_ORB = 9
 
 
 @dataclass
 class DashObject:
     objectType: DashObjectType
-    position: tuple[int, int]
+    position: tuple[float, float]
 
 
 class DashLayout:
