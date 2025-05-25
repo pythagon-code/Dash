@@ -5,14 +5,16 @@ from dataclasses import dataclass
 
 class DashObjectType(Enum):
     BLOCK = 1
-    SPIKE = 2
-    UPSIDE_DOWN_SPIKE = 3
-    YELLOW_ORB = 4
-    PINK_ORB = 5
-    BLUE_ORB = 6
-    GREEN_ORB = 7
-    RED_ORB = 8
-    BLACK_ORB = 9
+    UP_SPIKE = 2
+    RIGHT_SPIKE = 3
+    DOWN_SPIKE = 4
+    LEFT_SPIKE = 5
+    YELLOW_ORB = 6
+    PINK_ORB = 7
+    BLUE_ORB = 8
+    GREEN_ORB = 9
+    RED_ORB = 10
+    BLACK_ORB = 11
 
 
 @dataclass

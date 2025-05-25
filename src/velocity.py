@@ -14,7 +14,6 @@ class DashVelocity:
 
     def fall(self) -> None:
         self.velocity += self.GRAVITY if self.reversed_gravity else -self.GRAVITY
-        print(self.velocity)
         self.clamp_speed()
 
 

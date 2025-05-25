@@ -15,8 +15,10 @@ class DashRenderer:
         self.rotated_cubes_images_iter = iter(self.rotated_cubes_images)
         self.obj_to_image = {
             DashObjectType.BLOCK: self.game.block,
-            DashObjectType.SPIKE: self.game.spike,
-            DashObjectType.UPSIDE_DOWN_SPIKE: self.game.upside_down_spike,
+            DashObjectType.UP_SPIKE: self.game.up_spike,
+            DashObjectType.RIGHT_SPIKE: self.game.right_spike,
+            DashObjectType.DOWN_SPIKE: self.game.down_spike,
+            DashObjectType.LEFT_SPIKE: self.game.left_spike,
             DashObjectType.YELLOW_ORB: self.game.yellow_orb,
             DashObjectType.PINK_ORB: self.game.pink_orb,
             DashObjectType.BLUE_ORB: self.game.blue_orb,

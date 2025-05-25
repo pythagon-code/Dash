@@ -1,7 +1,7 @@
 from layout import *
 from velocity import DashVelocity
 
-
+HITBOX_SPIKE = 0.9
 HITBOX_ORB = 0.75
 
 class DashPhysics:
@@ -13,8 +13,10 @@ class DashPhysics:
 
     HITBOX_SIZE = {
         DashObjectType.BLOCK: 1,
-        DashObjectType.SPIKE: 0.9,
-        DashObjectType.UPSIDE_DOWN_SPIKE: 0.9,
+        DashObjectType.UP_SPIKE: HITBOX_SPIKE,
+        DashObjectType.RIGHT_SPIKE: HITBOX_SPIKE,
+        DashObjectType.DOWN_SPIKE: HITBOX_SPIKE,
+        DashObjectType.LEFT_SPIKE: HITBOX_SPIKE,
         DashObjectType.YELLOW_ORB: HITBOX_ORB,
         DashObjectType.PINK_ORB: HITBOX_ORB,
         DashObjectType.BLUE_ORB: HITBOX_ORB,
@@ -40,7 +42,6 @@ class DashPhysics:
         touch_distance = self.HITBOX_SIZE[obj.objectType]
         real_dist_x = abs(self.cube_position[0] + self.line - obj.position[0])
         real_dist_y = abs(self.cube_position[1] - obj.position[1])
-        # print(f"real_dist_x: {real_dist_x}, real_dist_y: {real_dist_y}, touch_distance: {touch_distance}, cube_pos: {self.cube_position}, obj_pos: {obj.position}")
         return real_dist_x < touch_distance and real_dist_y < touch_distance
 
 
@@ -52,11 +53,10 @@ class DashPhysics:
         above = (self.cube_position[1] > obj.position[1]) ^ self.cube_velocity.reversed_gravity
         real_dist_x = abs(self.cube_position[0] + self.line - obj.position[0])
         real_dist_y = abs(self.cube_position[1] - obj.position[1])
-        # print(above, real_dist_x, real_dist_y, grounded_distance, lower_bound)
         return above and real_dist_x < grounded_distance and lower_bound < real_dist_y <= grounded_distance
 
 
-    def step(self, jump: bool, just_jump: bool, restart: bool) -> None:
+    def step(self, jump: bool, just_jump: bool) -> None:
         if self.cube_position[1] > 20 or self.cube_position[1] <= 0 and self.cube_velocity.reversed_gravity:
             self.died = True
             return
@@ -72,7 +72,11 @@ class DashPhysics:
             if not DashLayout.should_display_object(obj, self.line):
                 break
 
-            if obj.objectType == DashObjectType.SPIKE or obj.objectType == DashObjectType.UPSIDE_DOWN_SPIKE:
+            if obj.objectType == DashObjectType.UP_SPIKE \
+                or obj.objectType == DashObjectType.RIGHT_SPIKE \
+                or obj.objectType == DashObjectType.DOWN_SPIKE \
+                or obj.objectType == DashObjectType.LEFT_SPIKE \
+            :
                 if self.is_cube_touching(obj):
                     self.died = True
             elif obj.objectType == DashObjectType.BLOCK:
@@ -109,7 +113,6 @@ class DashPhysics:
         if self.falling:
             self.cube_velocity.fall()
 
-        # print(f"velocity: {self.cube_velocity.velocity}")
         if jump and not self.falling and self.rebound == 0:
             self.cube_velocity.set_speed(0.25)
             self.rebound = self.REBOUND_FRAMES

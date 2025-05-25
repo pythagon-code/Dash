@@ -1,7 +1,7 @@
 import pygame
 
 from renderer import DashRenderer
-from layout_creator import DashLayoutCreator
+from layout_reader import DashLayoutReader
 from physics import DashPhysics
 
 
@@ -24,8 +24,10 @@ class DashGame:
 
         self.cube = pygame.transform.scale(pygame.image.load("assets/cube.png"), self.BLOCK_SIZE)
         self.block = pygame.transform.scale(pygame.image.load("assets/block4.png"), self.BLOCK_SIZE)
-        self.spike = pygame.transform.scale(pygame.image.load("assets/spike2.png"), self.BLOCK_SIZE)
-        self.upside_down_spike = pygame.transform.rotate(self.spike, 180)
+        self.up_spike = pygame.transform.scale(pygame.image.load("assets/spike2.png"), self.BLOCK_SIZE)
+        self.right_spike = pygame.transform.rotate(self.up_spike, -90)
+        self.down_spike = pygame.transform.rotate(self.up_spike, 180)
+        self.left_spike = pygame.transform.rotate(self.up_spike, 90)
         self.yellow_orb = pygame.transform.scale(pygame.image.load("assets/yellow-orb.png"), self.ORB_SIZE)
         self.pink_orb = pygame.transform.scale(pygame.image.load("assets/pink-orb.png"), self.ORB_SIZE)
         self.blue_orb = pygame.transform.scale(pygame.image.load("assets/blue-orb.png"), self.ORB_SIZE)
@@ -35,14 +37,13 @@ class DashGame:
 
         self.just_jump = 0
 
-        self.layout = DashLayoutCreator.create_default_layout()
+        self.layout = DashLayoutReader.read_layout_from_csv("layouts/level1.csv")
         self.physics = DashPhysics(self.layout)
         self.renderer = DashRenderer(self)
 
 
     def loop(self) -> None:
         jump = pygame.key.get_pressed()[pygame.K_SPACE] or pygame.mouse.get_pressed()[0]
-        restart = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -51,15 +52,16 @@ class DashGame:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.just_jump = self.JUST_JUMP_FRAMES
-                if event.key == pygame.K_r or event.key == pygame.K_RETURN:
-                    restart = True
+                elif event.key == pygame.K_1:
+                    ...
+                    
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 0:
                     self.just_jump = self.JUST_JUMP_FRAMES
 
         self.just_jump -= 1
 
-        self.physics.step(jump, self.just_jump > 0, restart)
+        self.physics.step(jump, self.just_jump > 0)
         self.renderer.render()
 
         if self.physics.died:
