@@ -1,8 +1,8 @@
 import pygame
 
-from renderer import DashRenderer
-from layout_reader import DashLayoutReader
-from physics import DashPhysics
+from src.renderer import DashRenderer
+from src.layout_reader import DashLayoutReader
+from src.physics import DashPhysics
 
 
 class DashGame:

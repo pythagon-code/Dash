@@ -1,4 +1,4 @@
-from game import DashGame
+from src.game import DashGame
 
 
 if __name__ == "__main__":

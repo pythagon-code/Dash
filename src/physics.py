@@ -1,7 +1,8 @@
-from layout import *
-from velocity import DashVelocity
+from src.layout import *
+from src.velocity import DashVelocity
 
 EDITOR_MODE = False
+
 HITBOX_SPIKE = 0.7 if not EDITOR_MODE else 0
 HITBOX_ORB = 0.75
 
@@ -58,7 +59,7 @@ class DashPhysics:
     def is_cube_grounded(self, obj: DashObject) -> bool:
         assert obj.objectType == DashObjectType.BLOCK
         grounded_distance = 1.01
-        threshold = 0.25
+        threshold = 0.4
         lower_bound = grounded_distance - threshold
         above = (self.cube_position[1] > obj.position[1]) ^ self.cube_velocity.reversed_gravity
         real_dist_x = abs(self.cube_position[0] + self.line - obj.position[0])

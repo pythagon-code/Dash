@@ -1,6 +1,6 @@
 import pygame.transform
 
-from layout import *
+from src.layout import *
 
 
 class DashRenderer:
@@ -8,7 +8,7 @@ class DashRenderer:
 
 
     def __init__(self, game) -> None:
-        from game import DashGame       # Prevent circular import
+        from src.game import DashGame       # Prevent circular import
         self.game: DashGame = game
         self.rotated_cubes_images = [pygame.transform.rotate(self.game.cube, -i) for i in range(360)]
         self.rotations = 0

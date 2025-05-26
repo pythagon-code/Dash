@@ -1,4 +1,4 @@
-from layout import *
+from src.layout import *
 
 
 class DashLayoutReader:

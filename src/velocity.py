@@ -1,5 +1,5 @@
 class DashVelocity:
-    MAX_SPEED = 10
+    MAX_SPEED = 0.4
     GRAVITY = 0.01
 
 
