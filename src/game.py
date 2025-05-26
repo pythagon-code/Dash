@@ -12,6 +12,10 @@ class DashGame:
 
     JUST_JUMP_FRAMES = 20
 
+    NOT_STARTED = 0
+    RUNNING = 1
+    WON = 2
+
 
     def __init__(self) -> None:
         pygame.init()
@@ -19,6 +23,9 @@ class DashGame:
         self.screen = pygame.display.set_mode(DashGame.SCREEN_DIMS)
         self.background = pygame.image.load("assets/dash-background.png")
         pygame.display.set_caption("Dash")
+
+        self.menu = pygame.image.load("assets/dash-menu.png")
+        self.win_screen = pygame.image.load("assets/dash-win-screen.png")
 
         self.clock = clock = pygame.time.Clock()
 
@@ -35,6 +42,7 @@ class DashGame:
         self.red_orb = pygame.transform.scale(pygame.image.load("assets/red-orb.png"), self.ORB_SIZE)
         self.black_orb = pygame.transform.scale(pygame.image.load("assets/black-orb.png"), self.ORB_SIZE)
 
+        self.state = self.NOT_STARTED
         self.just_jump = 0
 
         self.layout = DashLayoutReader.read_layout_from_csv("layouts/level1.csv")
@@ -42,7 +50,42 @@ class DashGame:
         self.renderer = DashRenderer(self)
 
 
+    def set_layout(self, event: pygame.event.EventType):
+        assert event.type == pygame.KEYDOWN
+        if event.key == pygame.K_1:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level1.csv")
+        elif event.key == pygame.K_2:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level2.csv")
+        elif event.key == pygame.K_3:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level3.csv")
+        elif event.key == pygame.K_4:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level4.csv")
+        elif event.key == pygame.K_5:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level5.csv")
+        elif event.key == pygame.K_6:
+            self.layout = DashLayoutReader.read_layout_from_csv("layouts/level6.csv")
+        else:
+            return
+
+        self.state = self.RUNNING
+        self.physics = DashPhysics(self.layout)
+
     def loop(self) -> None:
+        if self.state != self.RUNNING:
+            if self.state == self.NOT_STARTED:
+                self.screen.blit(self.menu, (0, 0))
+            elif self.state == self.WON:
+                self.screen.blit(self.win_screen, (0, 0))
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    self.set_layout(event)
+                elif event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            return
+
         jump = pygame.key.get_pressed()[pygame.K_SPACE] or pygame.mouse.get_pressed()[0]
 
         for event in pygame.event.get():
@@ -52,9 +95,9 @@ class DashGame:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.just_jump = self.JUST_JUMP_FRAMES
-                elif event.key == pygame.K_1:
-                    ...
-                    
+
+                self.set_layout(event)
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 0:
                     self.just_jump = self.JUST_JUMP_FRAMES

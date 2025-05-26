@@ -20,7 +20,7 @@ class DashLayoutReader:
     @staticmethod
     def create_default_layout() -> DashLayout:
         return DashLayout(objects=[
-            DashObject(DashObjectType.UPSIDE_DOWN_SPIKE, (17 , 0)),
+            DashObject(DashObjectType.DOWN_SPIKE, (17 , 0)),
             DashObject(DashObjectType.BLOCK, (13, 1)),
             DashObject(DashObjectType.BLOCK, (14, 1)),
             DashObject(DashObjectType.BLOCK, (15, 1)),

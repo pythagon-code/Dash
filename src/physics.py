@@ -1,7 +1,8 @@
 from layout import *
 from velocity import DashVelocity
 
-HITBOX_SPIKE = 0.9
+EDITOR_MODE = False
+HITBOX_SPIKE = 0.7 if not EDITOR_MODE else 0
 HITBOX_ORB = 0.75
 
 class DashPhysics:
@@ -12,7 +13,7 @@ class DashPhysics:
 
 
     HITBOX_SIZE = {
-        DashObjectType.BLOCK: 1,
+        DashObjectType.BLOCK: 1 if not EDITOR_MODE else 0,
         DashObjectType.UP_SPIKE: HITBOX_SPIKE,
         DashObjectType.RIGHT_SPIKE: HITBOX_SPIKE,
         DashObjectType.DOWN_SPIKE: HITBOX_SPIKE,
@@ -26,6 +27,15 @@ class DashPhysics:
     }
 
     REBOUND_FRAMES = 20
+
+
+    JUMP_FORCE = 0.22
+    YELLOW_ORB_FORCE = 0.25
+    PINK_ORB_FORCE = 0.2
+    BLUE_ORB_FORCE = 0.25
+    GREEN_ORB_FORCE = 0.25
+    RED_ORB_FORCE = 0.32
+    BLACK_ORB_FORCE = 0.4
 
 
     def __init__(self, layout: DashLayout) -> None:
@@ -91,32 +101,32 @@ class DashPhysics:
 
             elif self.rebound == 0 and just_jump and self.is_cube_touching(obj):
                 if obj.objectType == DashObjectType.YELLOW_ORB:
-                    self.cube_velocity.set_speed(0.25)
+                    self.cube_velocity.set_speed(self.YELLOW_ORB_FORCE)
                     self.rebound = self.REBOUND_FRAMES
                 elif obj.objectType == DashObjectType.PINK_ORB:
-                    self.cube_velocity.set_speed(0.2)
+                    self.cube_velocity.set_speed(self.PINK_ORB_FORCE)
                     self.rebound = self.REBOUND_FRAMES
                 elif obj.objectType == DashObjectType.BLUE_ORB:
                     self.cube_velocity.reverse_gravity()
                     self.rebound = self.REBOUND_FRAMES
                 elif obj.objectType == DashObjectType.GREEN_ORB:
                     self.cube_velocity.reverse_gravity()
-                    self.cube_velocity.set_speed(0.25)
+                    self.cube_velocity.set_speed(self.GREEN_ORB_FORCE)
                     self.rebound = self.REBOUND_FRAMES
                 elif obj.objectType == DashObjectType.RED_ORB:
-                    self.cube_velocity.set_speed(0.32)
+                    self.cube_velocity.set_speed(self.RED_ORB_FORCE)
                     self.rebound = self.REBOUND_FRAMES
                 elif obj.objectType == DashObjectType.BLACK_ORB:
-                    self.cube_velocity.set_speed(-0.4)
+                    self.cube_velocity.set_speed(-self.BLACK_ORB_FORCE)
                     self.rebound = self.REBOUND_FRAMES
 
         if self.falling:
             self.cube_velocity.fall()
 
         if jump and not self.falling and self.rebound == 0:
-            self.cube_velocity.set_speed(0.25)
+            self.cube_velocity.set_speed(0.22)
             self.rebound = self.REBOUND_FRAMES
         elif self.rebound > 0:
             self.rebound -= 1
 
-        self.line += 0.08173
+        self.line += 0.09173

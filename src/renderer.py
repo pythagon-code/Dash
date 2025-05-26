@@ -12,7 +12,6 @@ class DashRenderer:
         self.game: DashGame = game
         self.rotated_cubes_images = [pygame.transform.rotate(self.game.cube, -i) for i in range(360)]
         self.rotations = 0
-        self.rotated_cubes_images_iter = iter(self.rotated_cubes_images)
         self.obj_to_image = {
             DashObjectType.BLOCK: self.game.block,
             DashObjectType.UP_SPIKE: self.game.up_spike,
@@ -56,8 +55,10 @@ class DashRenderer:
 
 
     def render(self) -> None:
+        if len(self.game.layout.objects) == 0 or self.game.layout.objects[-1].position[0] - self.game.physics.line <= 0:
+            self.game.state = self.game.WON
+
         if not self.game.physics.falling:
-            self.rotated_cubes_images_iter = iter(self.rotated_cubes_images)
             self.rotations = round(self.rotations / 90) * 90
             self.rotations %= 360
 
