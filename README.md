@@ -1,8 +1,10 @@
 # Dash #
 
+![Gameplay](media/gameplay.gif)
+
 ## Description ##
 
-This is my Dash game, a clone of Geometry Dash. It features the main gameplay and included 4 playable layouts. The game is made in pygame.
+This is my Dash game, a clone of Geometry Dash. It features the main gameplay and includes 3 playable layouts. The game is made in pygame and uses CSV files to store the layouts.
 
 The game has blocks, spikes of 4 rotations, and orbs with unique effects.
 
@@ -32,12 +34,12 @@ Then create a virtual environment to isolate dependencies:
 python -m venv .venv
 ```
 
-Activate the environment on Linux/Mac:
+Activate the environment on Linux/Mac terminal:
 ```bash
 source .venv/bin/activate
 ```
 
-On Windows:
+On Powershell:
 ```bash
 .venv\Scripts\Activate.ps1
 ```

@@ -23,6 +23,7 @@ class DashGame:
         self.screen = pygame.display.set_mode(DashGame.SCREEN_DIMS)
         self.background = pygame.image.load("assets/dash-background.png")
         pygame.display.set_caption("Dash")
+        pygame.display.set_icon(pygame.image.load("assets/spike.png"))  
 
         self.menu = pygame.image.load("assets/dash-menu.png")
         self.win_screen = pygame.image.load("assets/dash-win-screen.png")
